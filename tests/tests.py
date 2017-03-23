@@ -99,7 +99,8 @@ def get_unique_project_name():
     user = re.sub("[^A-Z_]", "", getpass.getuser().upper())
 
     print('get_unique_project_name: user is %r' % user)
-    if user in ('TRAVIS', 'travis') and 'TRAVIS_JOB_NUMBER' in os.environ:
+    print("get_unique_project_name: 'TRAVIS_JOB_NUMBER' in os.environ = %r" % ('TRAVIS_JOB_NUMBER' in os.environ))
+    if user == 'TRAVIS' and 'TRAVIS_JOB_NUMBER' in os.environ:
         # please note that user underline (_) is not suppored by
         # jira even if is documented as supported.
         jid = 'T' + hashify(user + os.environ['TRAVIS_JOB_NUMBER'])
