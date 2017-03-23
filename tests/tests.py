@@ -98,6 +98,7 @@ def get_unique_project_name():
     jid = ""
     user = re.sub("[^A-Z_]", "", getpass.getuser().upper())
 
+    print('get_unique_project_name: user is %r' % user)
     if user in ('TRAVIS', 'travis') and 'TRAVIS_JOB_NUMBER' in os.environ:
         # please note that user underline (_) is not suppored by
         # jira even if is documented as supported.
@@ -237,16 +238,10 @@ class JiraTestManager(object):
                 self._delete_project_if_exists(self.project_a)
                 self._delete_project_if_exists(self.project_b)
 
-                self._create_project_and_handle_exception(self.project_a, self.project_a_name)
-                # keep it here as often JIRA will report the
-                # project as missing even after is created
-                sleep(1)
+                self._create_project_and_ensure_it_exists(self.project_a, self.project_a_name)
                 self.project_a_id = self.jira_admin.project(self.project_a).id
 
-                self._create_project_and_handle_exception(self.project_b, self.project_b_name)
-                # keep it here as often JIRA will report the
-                # project as missing even after is created
-                sleep(1)
+                self._create_project_and_ensure_it_exists(self.project_b, self.project_b_name)
 
                 self.project_b_issue1_obj = self.jira_admin.create_issue(project=self.project_b,
                                                                          summary='issue 1 from %s'
@@ -334,12 +329,14 @@ class JiraTestManager(object):
                     break
                 sleep(2)
 
-    def _create_project_and_handle_exception(self, project_key, project_name):
+    def _create_project_and_ensure_it_exists(self, project_key, project_name):
         try:
             self.jira_admin.create_project(project_key,
                                            project_name)
         except Exception:
             # we care only for the project to exist
+            # TODO(esciara) have to check if this really garanties that project is nevertheless created
+            # and does not miss another potential exception
             pass
         # wait for the project to created
         for i in range(1, 20):
