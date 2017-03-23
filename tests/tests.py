@@ -344,8 +344,11 @@ class JiraTestManager(object):
         # wait for the project to created
         for i in range(1, 20):
             try:
+                print('_create_project_and_handle_exception: testing that project %s exists' % project_key)
                 self.jira_admin.project(project_key)
+                print('_create_project_and_handle_exception: project %s exists indeed' % project_key)
             except JIRAError:
+                print('_create_project_and_handle_exception: JIRAError thrown => project %s does not exist yet' % project_key)
                 pass
             else:
                 break
