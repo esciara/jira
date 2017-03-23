@@ -178,7 +178,7 @@ class JiraTestManager(object):
                 if self.jira_admin.current_user() != self.CI_JIRA_ADMIN:
                     # self.jira_admin.
                     self.initialized = 1
-                    # TODO ssbarnea to explain why sys.exit(3)
+                    # TODO(ssbarnea) to explain why sys.exit(3)
                     # => does it not mean that self.initialized = 1 won't be used later?
                     sys.exit(3)
 
@@ -292,17 +292,19 @@ class JiraTestManager(object):
                                                   logging_on_oauth, validate_anonymous):
         if oauth_flag:
             jira_client = JIRA(oauth={'access_token': access_token,
-                               'access_token_secret': access_token_secret,
-                               'consumer_key': CONSUMER_KEY,
-                               'key_cert': KEY_CERT_DATA}, logging=logging_on_oauth, max_retries=self.max_retries)
+                                      'access_token_secret': access_token_secret,
+                                      'consumer_key': CONSUMER_KEY,
+                                      'key_cert': KEY_CERT_DATA},
+                               logging=logging_on_oauth,
+                               max_retries=self.max_retries)
         else:
             if user:
                 jira_client = JIRA(self.CI_JIRA_URL,
-                            basic_auth=(user, password),
-                            logging=False, validate=True, max_retries=self.max_retries)
+                                   basic_auth=(user, password),
+                                   logging=False, validate=True, max_retries=self.max_retries)
             else:
                 jira_client = JIRA(self.CI_JIRA_URL,
-                            logging=False, validate=validate_anonymous, max_retries=self.max_retries)
+                                   logging=False, validate=validate_anonymous, max_retries=self.max_retries)
         return jira_client
 
     def _setattr_from_env_if_present(self, attribute, default_value):
@@ -348,7 +350,6 @@ class JiraTestManager(object):
             else:
                 break
             sleep(2)
-
 
 
 def find_by_key(seq, key):
