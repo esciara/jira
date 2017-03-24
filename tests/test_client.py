@@ -52,6 +52,7 @@ def slug(request, cl_admin):
 
 
 @flaky
+@pytest.mark.wip
 @pytest.mark.xfail(reason='fails often but only with Travis')
 def test_delete_project(cl_admin, cl_normal, slug):
     time.sleep(6)  # with <=5s was failing often
@@ -68,6 +69,7 @@ def test_delete_project(cl_admin, cl_normal, slug):
         raise
 
 
+@pytest.mark.wip
 def test_delete_inexistant_project(cl_admin):
     slug = 'abogus123'
     with pytest.raises(ValueError) as ex:
@@ -79,6 +81,7 @@ def test_delete_inexistant_project(cl_admin):
     )
 
 
+@pytest.mark.wip
 def test_template_list():
     text = (
     r'{"projectTemplatesGroupedByType": ['
