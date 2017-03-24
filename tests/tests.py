@@ -695,7 +695,6 @@ class IssueTests(unittest.TestCase):
         # self.assertFalse(hasattr(issue, 'changelog'))
 
     @not_on_custom_jira_instance
-    @pytest.mark.wip
     def test_create_issue_with_fieldargs(self):
         issue = self.jira.create_issue(project=self.project_b,
                                        summary='Test issue created', description='blahery',
@@ -708,7 +707,6 @@ class IssueTests(unittest.TestCase):
         issue.delete()
 
     @not_on_custom_jira_instance
-    @pytest.mark.wip
     def test_create_issue_with_fielddict(self):
         fields = {
             'project': {
@@ -731,7 +729,6 @@ class IssueTests(unittest.TestCase):
         issue.delete()
 
     @not_on_custom_jira_instance
-    @pytest.mark.wip
     def test_create_issue_without_prefetch(self):
         issue = self.jira.create_issue(prefetch=False,
                                        project=self.project_b,
@@ -745,7 +742,6 @@ class IssueTests(unittest.TestCase):
         issue.delete()
 
     @not_on_custom_jira_instance
-    @pytest.mark.wip
     def test_create_issues(self):
         field_list = [{
             'project': {
@@ -788,7 +784,6 @@ class IssueTests(unittest.TestCase):
             issue['issue'].delete()
 
     @not_on_custom_jira_instance
-    @pytest.mark.wip
     def test_create_issues_one_failure(self):
         field_list = [{
             'project': {
@@ -842,7 +837,6 @@ class IssueTests(unittest.TestCase):
                 issue['issue'].delete()
 
     @not_on_custom_jira_instance
-    @pytest.mark.wip
     def test_create_issues_without_prefetch(self):
         field_list = [dict(project=self.project_b,
                            summary='Test issue created',
