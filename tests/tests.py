@@ -658,7 +658,6 @@ class IssueTests(unittest.TestCase):
         self.issue_2 = self.test_manager.project_b_issue2
         self.issue_3 = self.test_manager.project_b_issue3
 
-    @pytest.mark.wip
     def test_issue(self):
         issue = self.jira.issue(self.issue_1)
         self.assertEqual(issue.key, self.issue_1)
@@ -666,7 +665,6 @@ class IssueTests(unittest.TestCase):
                          'issue 1 from %s' % self.project_b)
 
     @unittest.skip("disabled as it seems to be ignored by jira, returning all")
-    @pytest.mark.wip
     def test_issue_field_limiting(self):
         issue = self.jira.issue(self.issue_2, fields='summary,comment')
         self.assertEqual(issue.fields.summary,
@@ -682,7 +680,6 @@ class IssueTests(unittest.TestCase):
         comment2.delete()
         comment3.delete()
 
-    @pytest.mark.wip
     def test_issue_equal(self):
         issue1 = self.jira.issue(self.issue_1)
         issue2 = self.jira.issue(self.issue_2)
@@ -690,7 +687,6 @@ class IssueTests(unittest.TestCase):
         self.assertTrue(issue1 == issues[0])
         self.assertFalse(issue2 == issues[0])
 
-    @pytest.mark.wip
     def test_issue_expandos(self):
         issue = self.jira.issue(self.issue_1, expand='editmeta,schema')
         self.assertTrue(hasattr(issue, 'editmeta'))
@@ -1199,7 +1195,6 @@ class IssueTests(unittest.TestCase):
         # self.assertEqual(issue.fields.assignee.name, self.test_manager.CI_JIRA_USER)
         # self.assertEqual(issue.fields.status.id, transition_id)
 
-    @pytest.mark.wip
     def test_votes(self):
         self.jira_normal.remove_vote(self.issue_1)
         # not checking the result on this
@@ -1214,7 +1209,6 @@ class IssueTests(unittest.TestCase):
         new_votes = self.jira.votes(self.issue_1)
         assert votes.votes == new_votes.votes
 
-    @pytest.mark.wip
     def test_votes_with_issue_obj(self):
         issue = self.jira_normal.issue(self.issue_1)
         self.jira_normal.remove_vote(issue)
