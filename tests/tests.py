@@ -112,18 +112,6 @@ def get_unique_project_name():
     return jid
 
 
-class Singleton(type):
-
-    def __init__(cls, name, bases, dict):
-        super(Singleton, cls).__init__(name, bases, dict)
-        cls.instance = None
-
-    def __call__(cls, *args, **kw):
-        if cls.instance is None:
-            cls.instance = super(Singleton, cls).__call__(*args, **kw)
-        return cls.instance
-
-
 class JiraTestManager(object):
     """Used to instantiate and populate the JIRA instance with data used by the unit tests.
 
@@ -132,20 +120,10 @@ class JiraTestManager(object):
         CI_JIRA_USER (str): Limited user account name.
         max_retries (int): number of retries to perform for recoverable HTTP errors.
     """
-
-    # __metaclass__ = Singleton
-
-    # __instance = None
-    #
-    # Singleton implementation
-    # def __new__(cls, *args, **kwargs):
-    #     if not cls.__instance:
-    #         cls.__instance = super(JiraTestManager, cls).__new__(
-    #                             cls, *args, **kwargs)
-    #     return cls.__instance
-
-    #  Implementing some kind of Singleton, to prevent test initialization
-    # http://stackoverflow.com/questions/31875/is-there-a-simple-elegant-way-to-define-singletons-in-python/33201#33201
+    # Implementing some kind of Singleton, to prevent test initialization
+    # Using the Borg Pattern as defined in http://wiki.c2.com/?PythonSingleton
+    # Merits of this approach are discussed here (amongst other places):
+    # http://stackoverflow.com/questions/1318406/why-is-the-borg-pattern-better-than-the-singleton-pattern-in-python
     __shared_state = {}
 
     @retry(stop=stop_after_attempt(2))
