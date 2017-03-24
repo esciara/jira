@@ -928,7 +928,6 @@ class IssueTests(unittest.TestCase):
         self.assertEqual(issue.fields.description, 'Now updated, but silently')
         issue.delete()
 
-    @pytest.mark.wip
     def test_delete(self):
         issue = self.jira.create_issue(project=self.project_b,
                                        summary='Test issue created',
@@ -939,7 +938,6 @@ class IssueTests(unittest.TestCase):
         self.assertRaises(JIRAError, self.jira.issue, key)
 
     @not_on_custom_jira_instance
-    @pytest.mark.wip
     def test_createmeta(self):
         meta = self.jira.createmeta()
         ztravisdeb_proj = find_by_key(meta['projects'], self.project_b)
@@ -947,7 +945,6 @@ class IssueTests(unittest.TestCase):
         self.assertGreaterEqual(len(ztravisdeb_proj['issuetypes']), 1)
 
     @not_on_custom_jira_instance
-    @pytest.mark.wip
     def test_createmeta_filter_by_projectkey_and_name(self):
         meta = self.jira.createmeta(projectKeys=self.project_b,
                                     issuetypeNames='Bug')
@@ -955,7 +952,6 @@ class IssueTests(unittest.TestCase):
         self.assertEqual(len(meta['projects'][0]['issuetypes']), 1)
 
     @not_on_custom_jira_instance
-    @pytest.mark.wip
     def test_createmeta_filter_by_projectkeys_and_name(self):
         meta = self.jira.createmeta(projectKeys=(self.project_a,
                                                  self.project_b), issuetypeNames='Improvement')
@@ -964,7 +960,6 @@ class IssueTests(unittest.TestCase):
             self.assertEqual(len(project['issuetypes']), 1)
 
     @not_on_custom_jira_instance
-    @pytest.mark.wip
     def test_createmeta_filter_by_id(self):
         projects = self.jira.projects()
         proja = find_by_key_value(projects, self.project_a)
@@ -975,20 +970,17 @@ class IssueTests(unittest.TestCase):
         for project in meta['projects']:
             self.assertEqual(len(project['issuetypes']), 3)
 
-    @pytest.mark.wip
     def test_createmeta_expando(self):
         # limit to SCR project so the call returns promptly
         meta = self.jira.createmeta(projectKeys=self.project_b,
                                     expand='projects.issuetypes.fields')
         self.assertTrue('fields' in meta['projects'][0]['issuetypes'][0])
 
-    @pytest.mark.wip
     def test_assign_issue(self):
         self.assertTrue(self.jira.assign_issue(self.issue_1, self.test_manager.CI_JIRA_ADMIN))
         self.assertEqual(self.jira.issue(self.issue_1).fields.assignee.name,
                          self.test_manager.CI_JIRA_ADMIN)
 
-    @pytest.mark.wip
     def test_assign_issue_with_issue_obj(self):
         issue = self.jira.issue(self.issue_1)
         x = self.jira.assign_issue(issue, self.test_manager.CI_JIRA_ADMIN)
@@ -996,12 +988,10 @@ class IssueTests(unittest.TestCase):
         self.assertEqual(self.jira.issue(self.issue_1).fields.assignee.name,
                          self.test_manager.CI_JIRA_ADMIN)
 
-    @pytest.mark.wip
     def test_assign_to_bad_issue_raises(self):
         self.assertRaises(JIRAError, self.jira.assign_issue, 'NOPE-1',
                           'notauser')
 
-    @pytest.mark.wip
     def test_comments(self):
         for issue in [self.issue_1, self.jira.issue(self.issue_2)]:
             self.jira.issue(issue)
@@ -1015,7 +1005,6 @@ class IssueTests(unittest.TestCase):
             comments = self.jira.comments(issue)
             assert len(comments) == 0
 
-    @pytest.mark.wip
     def test_add_comment(self):
         comment = self.jira.add_comment(self.issue_3, 'a test comment!',
                                         visibility={'type': 'role', 'value': 'Administrators'})
@@ -1024,7 +1013,6 @@ class IssueTests(unittest.TestCase):
         self.assertEqual(comment.visibility.value, 'Administrators')
         comment.delete()
 
-    @pytest.mark.wip
     def test_add_comment_with_issue_obj(self):
         issue = self.jira.issue(self.issue_3)
         comment = self.jira.add_comment(issue, 'a new test comment!',
@@ -1042,7 +1030,6 @@ class IssueTests(unittest.TestCase):
         # self.assertEqual(comment.visibility.value, 'Administrators')
         comment.delete()
 
-    @pytest.mark.wip
     def test_editmeta(self):
         for i in (self.issue_1, self.issue_2):
             meta = self.jira.editmeta(i)
@@ -1144,7 +1131,6 @@ class IssueTests(unittest.TestCase):
     #        link.delete()
     #        self.assertRaises(JIRAError, self.jira.remote_link, 'BULK-3', _id)
 
-    @pytest.mark.wip
     def test_transitioning(self):
         # we check with both issue-as-string or issue-as-object
         transitions = []
