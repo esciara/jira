@@ -1153,6 +1153,7 @@ class IssueTests(unittest.TestCase):
     #        link.delete()
     #        self.assertRaises(JIRAError, self.jira.remote_link, 'BULK-3', _id)
 
+    @pytest.mark.wip
     def test_transitioning(self):
         # we check with both issue-as-string or issue-as-object
         transitions = []
