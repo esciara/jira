@@ -1001,6 +1001,7 @@ class IssueTests(unittest.TestCase):
         self.assertRaises(JIRAError, self.jira.assign_issue, 'NOPE-1',
                           'notauser')
 
+    @pytest.mark.wip
     def test_comments(self):
         for issue in [self.issue_1, self.jira.issue(self.issue_2)]:
             self.jira.issue(issue)
@@ -1014,6 +1015,7 @@ class IssueTests(unittest.TestCase):
             comments = self.jira.comments(issue)
             assert len(comments) == 0
 
+    @pytest.mark.wip
     def test_add_comment(self):
         comment = self.jira.add_comment(self.issue_3, 'a test comment!',
                                         visibility={'type': 'role', 'value': 'Administrators'})
@@ -1022,6 +1024,7 @@ class IssueTests(unittest.TestCase):
         self.assertEqual(comment.visibility.value, 'Administrators')
         comment.delete()
 
+    @pytest.mark.wip
     def test_add_comment_with_issue_obj(self):
         issue = self.jira.issue(self.issue_3)
         comment = self.jira.add_comment(issue, 'a new test comment!',
