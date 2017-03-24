@@ -222,6 +222,10 @@ class JiraTestManager(object):
 
                 self._create_project_and_ensure_it_exists(self.project_b, self.project_b_name)
 
+                # Wait a little to make sure that the project is fully created, with transitions
+                # before creating the issues
+                sleep(15)
+
                 self.project_b_issue1_obj = self.jira_admin.create_issue(project=self.project_b,
                                                                          summary='issue 1 from %s'
                                                                                  % self.project_b,
