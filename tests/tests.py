@@ -858,7 +858,6 @@ class IssueTests(unittest.TestCase):
             issue['issue'].delete()
 
     @not_on_custom_jira_instance
-    @pytest.mark.wip
     def test_update_with_fieldargs(self):
         issue = self.jira.create_issue(project=self.project_b,
                                        summary='Test issue for updating',
@@ -875,7 +874,6 @@ class IssueTests(unittest.TestCase):
         issue.delete()
 
     @not_on_custom_jira_instance
-    @pytest.mark.wip
     def test_update_with_fielddict(self):
         issue = self.jira.create_issue(project=self.project_b,
                                        summary='Test issue for updating', description='Will be updated shortly',
@@ -896,7 +894,6 @@ class IssueTests(unittest.TestCase):
         self.assertEqual(issue.fields.priority.name, 'Major')
         issue.delete()
 
-    @pytest.mark.wip
     def test_update_with_label(self):
         issue = self.jira.create_issue(project=self.project_b,
                                        summary='Test issue for updating labels', description='Label testing',
@@ -909,7 +906,6 @@ class IssueTests(unittest.TestCase):
         issue.update(fields=fields)
         self.assertEqual(issue.fields.labels, ['testLabel'])
 
-    @pytest.mark.wip
     def test_update_with_bad_label(self):
         issue = self.jira.create_issue(project=self.project_b,
                                        summary='Test issue for updating labels', description='Label testing',
@@ -923,7 +919,6 @@ class IssueTests(unittest.TestCase):
         self.assertRaises(JIRAError, issue.update, fields=fields)
 
     @not_on_custom_jira_instance
-    @pytest.mark.wip
     def test_update_with_notify_false(self):
         issue = self.jira.create_issue(project=self.project_b,
                                        summary='Test issue for updating',
@@ -1006,7 +1001,6 @@ class IssueTests(unittest.TestCase):
         self.assertRaises(JIRAError, self.jira.assign_issue, 'NOPE-1',
                           'notauser')
 
-    @pytest.mark.wip
     def test_comments(self):
         for issue in [self.issue_1, self.jira.issue(self.issue_2)]:
             self.jira.issue(issue)
@@ -1020,7 +1014,6 @@ class IssueTests(unittest.TestCase):
             comments = self.jira.comments(issue)
             assert len(comments) == 0
 
-    @pytest.mark.wip
     def test_add_comment(self):
         comment = self.jira.add_comment(self.issue_3, 'a test comment!',
                                         visibility={'type': 'role', 'value': 'Administrators'})
@@ -1029,7 +1022,6 @@ class IssueTests(unittest.TestCase):
         self.assertEqual(comment.visibility.value, 'Administrators')
         comment.delete()
 
-    @pytest.mark.wip
     def test_add_comment_with_issue_obj(self):
         issue = self.jira.issue(self.issue_3)
         comment = self.jira.add_comment(issue, 'a new test comment!',
@@ -1039,7 +1031,6 @@ class IssueTests(unittest.TestCase):
         self.assertEqual(comment.visibility.value, 'Administrators')
         comment.delete()
 
-    @pytest.mark.wip
     def test_update_comment(self):
         comment = self.jira.add_comment(self.issue_3, 'updating soon!')
         comment.update(body='updated!')
